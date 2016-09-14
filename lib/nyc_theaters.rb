@@ -28,6 +28,14 @@ module NycTheaters
      create_theaters(theaters_array)
     end
 
+
+    def self.find_by(search_term)
+      key = search_term.keys.first.to_s
+      value = search_term.values.first
+      theater = Unirest.get("https://data.cityofnewyork.us/resource/2hzz-95k8.json?#{key}=#{value}").body.first
+      NycTheater.new(theater)
+    end
+
     private_class_method :create_theaters
 
     def self.create_theaters(theaters_array)
